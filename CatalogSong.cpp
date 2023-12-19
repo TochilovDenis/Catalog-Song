@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ struct Song
 struct CatalogSong{
 	vector<Song> songs;
 	
-	void DisplayMenu() {
+	void DisplayMenu(CatalogSong& catalog) {
 		int choice;
 		do
 		{
@@ -28,6 +29,10 @@ struct CatalogSong{
 			cin >> choice;
 			switch (choice)
 			{
+			case 1:
+				addSongInteractive(catalog);
+				break;
+
 			default:
 				break;
 			}
@@ -38,6 +43,21 @@ struct CatalogSong{
 		songs.push_back(song);
 	}
 
+	void addSongInteractive(CatalogSong& catalog) {
+		Song newSong;
+		cout << "¬ведите название песни: ";
+		getline(cin, newSong.title);
+		cout << "¬ведите автора песни: ";
+		cin >> newSong.author;
+		cout << "¬ведите год выпуска песни: ";
+		cin >> newSong.year;
+		cout << "¬ведите текст песни (введите 'END' в новой строке, когда закончите):\n";
+		string lyrics_line;
+		while (getline(cin, lyrics_line) && lyrics_line != "END") {
+			newSong.lyrics += lyrics_line + "\n";
+		}
+		catalog.addSong(newSong);
+	}
 };
 
 int main(){
