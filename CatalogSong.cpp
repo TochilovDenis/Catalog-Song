@@ -41,6 +41,7 @@ struct CatalogSong {
 				break;
 			case 4:
 				cout << "Введите название песни для отображения: ";
+				cin.ignore();
 				getline(cin, title);
 				displaySong(title);
 				break;
@@ -63,6 +64,7 @@ struct CatalogSong {
 	void addSongInteractive(CatalogSong& catalog) {
 		Song newSong;
 		cout << "Введите название песни: ";
+		cin.ignore();
 		getline(cin, newSong.title);
 		cout << "Введите автора песни: ";
 		cin >> newSong.author;
