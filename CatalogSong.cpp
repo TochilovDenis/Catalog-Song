@@ -35,7 +35,9 @@ struct CatalogSong {
 			case 2:
 				removeSongInteractive();
 				break;
-
+			case 3:
+				updateSongInteractive();
+				break;
 			default:
 				break;
 			}
@@ -79,6 +81,37 @@ struct CatalogSong {
 		cin.ignore();
 		getline(cin, title);
 		removeSong(title);
+	}
+
+	void updateSong(const string& title, const Song& newSong) {
+		bool songUpdated = false;
+		for (Song& song : songs) {
+			if (song.title == title) {
+				song = newSong;
+				songUpdated = true;
+				break;
+			}
+		}
+		(songUpdated) ? cout << "Песня изменена.\n" : cout << "Песня не найдена.\n";
+	}
+
+	void updateSongInteractive() {
+		string title;
+		cout << "Введите название песни для обновления: ";
+		cin.ignore();
+		getline(cin, title);
+		Song newSong;
+		cout << "Введите новые данные песни.\n";
+		cout << "Название: ";
+		getline(cin, newSong.title);
+		cout << "Автор: ";
+		getline(cin, newSong.author);
+		cout << "Год: ";
+		cin >> newSong.year;
+		cin.ignore();
+		cout << "Текст: ";
+		getline(cin, newSong.lyrics);
+		updateSong(title, newSong);
 	}
 };
 
