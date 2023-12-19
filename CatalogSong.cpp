@@ -27,6 +27,7 @@ struct CatalogSong {
 				<< "9. Выход\n"
 				<< "Выберите действие: ";
 			cin >> choice;
+			string title;
 			switch (choice)
 			{
 			case 1:
@@ -37,6 +38,11 @@ struct CatalogSong {
 				break;
 			case 3:
 				updateSongInteractive();
+				break;
+			case 4:
+				cout << "Введите название песни для отображения: ";
+				getline(cin, title);
+				displaySong(title);
 				break;
 			default:
 				break;
@@ -63,6 +69,7 @@ struct CatalogSong {
 		}
 		catalog.addSong(newSong);
 	}
+
 	void removeSong(const string& title) {
 		auto it = remove_if(songs.begin(), songs.end(), [&](const Song& s) {
 			return s.title == title;
@@ -75,6 +82,7 @@ struct CatalogSong {
 			cout << "Песня не найдена.\n";
 		}
 	}
+
 	void removeSongInteractive() {
 		string title;
 		cout << "Введите название песни для удаления: ";
@@ -96,9 +104,9 @@ struct CatalogSong {
 	}
 
 	void updateSongInteractive() {
-		string title;
 		cout << "Введите название песни для обновления: ";
 		cin.ignore();
+		string title;
 		getline(cin, title);
 		Song newSong;
 		cout << "Введите новые данные песни.\n";
@@ -113,10 +121,29 @@ struct CatalogSong {
 		getline(cin, newSong.lyrics);
 		updateSong(title, newSong);
 	}
+
+	void displaySong(const string& title) {
+		bool songFound = false;
+		for (const Song& song : songs) {
+			if (song.title == title) {
+				cout << "Title: " << song.title
+					<< "\nAuthor: " << song.author
+					<< "\nYear: " << song.year
+					<< "\nLyrics: " << song.lyrics;
+				songFound = true;
+				break;
+			}
+		}
+		if (!songFound) {
+			cout << "Песня не найдена.\n";
+		}
+	}
+
 };
 
 int main(){
 	setlocale(LC_ALL,"");
-
+	CatalogSong catalog;
+	catalog.DisplayMenu(catalog);
 	return 0;
 }
