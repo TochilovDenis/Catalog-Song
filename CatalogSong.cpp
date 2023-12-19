@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#include <fstream>
+#include <iostream>
 #include <vector>
 #include <string>
 
@@ -27,7 +28,7 @@ struct CatalogSong {
 				<< "9. Выход\n"
 				<< "Выберите действие: ";
 			cin >> choice;
-			string title, author,lyrics;
+			string title, author, lyrics, filename;
 			switch (choice)
 			{
 			case 1:
@@ -56,6 +57,11 @@ struct CatalogSong {
 				cin.ignore();
 				getline(cin, lyrics);
 				searchByLyrics(lyrics);
+				break;
+			case 7:
+				cout << "Введите имя файла для загрузки: ";
+				cin >> filename;
+				loadFromFile(filename);
 				break;
 			default:
 				break;
@@ -229,6 +235,52 @@ struct CatalogSong {
 					<< "\nYear: " << song.year
 					<< "\nLyrics: " << song.lyrics << "\n";
 			}
+		}
+	}
+
+	void loadFromFile(const string& filename) {
+		ifstream file(filename);
+		if (file.is_open()) {
+			Song song;
+			string line;
+			bool lyrics = false;
+			while (getline(file, line)) {
+				if (file.fail()) {
+					cout << "Чтение файла не удалось.\n";
+					break;
+				}
+				if (line == "End song") {
+					if (!song.title.empty()) {
+						cout << "Title: " << song.title << "\n"
+							<< "Author: " << song.author << "\n"
+							<< "Year: " << song.year << "\n"
+							<< "Lyrics: " << song.lyrics << "\n";
+						songs.push_back(song);
+					}
+					song.title.clear();
+					song.author.clear();
+					song.year.clear();
+					song.lyrics.clear();
+					lyrics = false;
+				}
+				else if (song.title.empty()) {
+					song.title = line;
+				}
+				else if (song.author.empty()) {
+					song.author = line;
+				}
+				else if (song.year.empty() && !line.empty()) {
+					song.year = line;
+				}
+				else {
+					song.lyrics += line + "\n";
+					lyrics = true;
+				}
+			}
+			file.close();
+		}
+		else {
+			cout << "Не удалось открыть файл " << filename << "\n";
 		}
 	}
 };
