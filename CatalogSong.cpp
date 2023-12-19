@@ -27,7 +27,7 @@ struct CatalogSong {
 				<< "9. Выход\n"
 				<< "Выберите действие: ";
 			cin >> choice;
-			string title, author;
+			string title, author,lyrics;
 			switch (choice)
 			{
 			case 1:
@@ -50,6 +50,12 @@ struct CatalogSong {
 				cin.ignore();
 				getline(cin, author);
 				searchByAuthor(author);
+				break;
+			case 6:
+				cout << "Введите текст песни для поиска: ";
+				cin.ignore();
+				getline(cin, lyrics);
+				searchByLyrics(lyrics);
 				break;
 			default:
 				break;
@@ -187,6 +193,34 @@ struct CatalogSong {
 		}
 		if (results.empty()) {
 			cout << "Песни этого автора не найдены.\n";
+		}
+		else {
+			for (const Song& song : results) {
+				cout << "Title: " << song.title
+					<< "\nAuthor: " << song.author
+					<< "\nYear: " << song.year
+					<< "\nLyrics: " << song.lyrics << "\n";
+			}
+		}
+	}
+
+	void searchByLyrics(const string& lyrics) {
+		vector<Song> results;
+		string lowerLyrics = lyrics;
+		for (char& c : lowerLyrics) {
+			c = tolower(c);
+		}
+		for (const Song& song : songs) {
+			string lowerSongLyrics = song.lyrics;
+			for (char& c : lowerSongLyrics) {
+				c = tolower(c);
+			}
+			if (lowerSongLyrics.find(lowerLyrics) != string::npos) {
+				results.push_back(song);
+			}
+		}
+		if (results.empty()) {
+			cout << "Песен с этими текстами не найдено.\n";
 		}
 		else {
 			for (const Song& song : results) {
