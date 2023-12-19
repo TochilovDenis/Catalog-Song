@@ -16,16 +16,16 @@ struct CatalogSong {
 		int choice;
 		do
 		{
-			cout << "1. Добавить песню\n"
-				<< "2. Удалить песню\n"
-				<< "3. Изменить песню\n"
-				<< "4. Показать песню\n"
-				<< "5. Поиск по автору\n"
-				<< "6. Поиск по тексту песни\n"
-				<< "7. Загрузить песни из файла\n"
-				<< "8. Сохранить песни в файл\n"
-				<< "9. Выход\n"
-				<< "Выберите действие: ";
+			cout << "1. �������� �����\n"
+				<< "2. ������� �����\n"
+				<< "3. �������� �����\n"
+				<< "4. �������� �����\n"
+				<< "5. ����� �� ������\n"
+				<< "6. ����� �� ������ �����\n"
+				<< "7. ��������� ����� �� �����\n"
+				<< "8. ��������� ����� � ����\n"
+				<< "9. �����\n"
+				<< "�������� ��������: ";
 			cin >> choice;
 			string title, author;
 			switch (choice)
@@ -40,12 +40,12 @@ struct CatalogSong {
 				updateSongInteractive();
 				break;
 			case 4:
-				cout << "Введите название песни для отображения: ";
+				cout << "������� �������� ����� ��� �����������: ";
 				getline(cin, title);
 				displaySong(title);
 				break;
 			case 5:
-				cout << "Введите имя автора для поиска песен: ";
+				cout << "������� ��� ������ ��� ������ �����: ";
 				cin.ignore();
 				getline(cin, author);
 				searchByAuthor(author);
@@ -62,13 +62,14 @@ struct CatalogSong {
 
 	void addSongInteractive(CatalogSong& catalog) {
 		Song newSong;
-		cout << "Введите название песни: ";
+		cout << "������� �������� �����: ";
+
 		getline(cin, newSong.title);
-		cout << "Введите автора песни: ";
+		cout << "������� ������ �����: ";
 		cin >> newSong.author;
-		cout << "Введите год выпуска песни: ";
+		cout << "������� ��� ������� �����: ";
 		cin >> newSong.year;
-		cout << "Введите текст песни (введите 'END' в новой строке, когда закончите):\n";
+		cout << "������� ����� ����� (������� 'END' � ����� ������, ����� ���������):\n";
 		string lyrics_line;
 		while (getline(cin, lyrics_line) && lyrics_line != "END") {
 			newSong.lyrics += lyrics_line + "\n";
@@ -82,16 +83,16 @@ struct CatalogSong {
 			});
 		if (it != songs.end()) {
 			songs.erase(it, songs.end());
-			cout << "Песня удалена.\n";
+			cout << "����� �������.\n";
 		}
 		else {
-			cout << "Песня не найдена.\n";
+			cout << "����� �� �������.\n";
 		}
 	}
 
 	void removeSongInteractive() {
 		string title;
-		cout << "Введите название песни для удаления: ";
+		cout << "������� �������� ����� ��� ��������: ";
 		cin.ignore();
 		getline(cin, title);
 		removeSong(title);
@@ -106,24 +107,24 @@ struct CatalogSong {
 				break;
 			}
 		}
-		(songUpdated) ? cout << "Песня изменена.\n" : cout << "Песня не найдена.\n";
+		(songUpdated) ? cout << "����� ��������.\n" : cout << "����� �� �������.\n";
 	}
 
 	void updateSongInteractive() {
-		cout << "Введите название песни для обновления: ";
+		cout << "������� �������� ����� ��� ����������: ";
 		cin.ignore();
 		string title;
 		getline(cin, title);
 		Song newSong;
-		cout << "Введите новые данные песни.\n";
-		cout << "Название: ";
+		cout << "������� ����� ������ �����.\n";
+		cout << "��������: ";
 		getline(cin, newSong.title);
-		cout << "Автор: ";
+		cout << "�����: ";
 		getline(cin, newSong.author);
-		cout << "Год: ";
+		cout << "���: ";
 		cin >> newSong.year;
 		cin.ignore();
-		cout << "Текст: ";
+		cout << "�����: ";
 		getline(cin, newSong.lyrics);
 		updateSong(title, newSong);
 	}
@@ -141,7 +142,7 @@ struct CatalogSong {
 			}
 		}
 		if (!songFound) {
-			cout << "Песня не найдена.\n";
+			cout << "����� �� �������.\n";
 		}
 	}
 
@@ -184,7 +185,7 @@ struct CatalogSong {
 			}
 		}
 		if (results.empty()) {
-			cout << "Песни этого автора не найдены.\n";
+			cout << "����� ����� ������ �� �������.\n";
 		}
 		else {
 			for (const Song& song : results) {
