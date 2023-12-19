@@ -63,6 +63,11 @@ struct CatalogSong {
 				cin >> filename;
 				loadFromFile(filename);
 				break;
+			case 8:
+				cout << "Введите имя файла для сохранения: ";
+				cin >> filename;
+				saveToFile(filename);
+				break;
 			default:
 				break;
 			}
@@ -275,6 +280,27 @@ struct CatalogSong {
 				else {
 					song.lyrics += line + "\n";
 					lyrics = true;
+				}
+			}
+			file.close();
+		}
+		else {
+			cout << "Не удалось открыть файл " << filename << "\n";
+		}
+	}
+
+	void saveToFile(const string& filename) {
+		ofstream file(filename, ios::trunc);
+		if (file.is_open()) {
+			for (const Song& song : songs) {
+				file << song.title << "\n"
+					<< song.author << "\n"
+					<< song.year << "\n"
+					<< song.lyrics << "\n"
+					<< "End song" << "\n\n";
+				if (!file) {
+					cout << "Запись в файл не удалась.\n";
+					break;
 				}
 			}
 			file.close();
