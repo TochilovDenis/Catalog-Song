@@ -28,6 +28,12 @@ struct CatalogSong {
 				<< "9. Выход\n"
 				<< "Выберите действие: ";
 			cin >> choice;
+			if (cin.fail()) {
+				cout << "Введенное значение не является числом. Попробуйте еще раз.\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				continue;
+			}
 			string title, author, lyrics, filename;
 			switch (choice)
 			{
@@ -68,7 +74,10 @@ struct CatalogSong {
 				cin >> filename;
 				saveToFile(filename);
 				break;
+			case 9:
+				return;
 			default:
+				cout << "Неверный ввод. Попробуйте еще раз.\n";
 				break;
 			}
 		} while (true);
