@@ -34,6 +34,10 @@ struct CatalogSong{
 		} while (true);
 	}
 
+	void addSong(const Song& song) {
+		songs.push_back(song);
+	}
+
 };
 
 int main(){
