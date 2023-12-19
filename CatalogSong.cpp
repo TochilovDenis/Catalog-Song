@@ -27,7 +27,7 @@ struct CatalogSong {
 				<< "9. Выход\n"
 				<< "Выберите действие: ";
 			cin >> choice;
-			string title;
+			string title, author;
 			switch (choice)
 			{
 			case 1:
@@ -43,6 +43,12 @@ struct CatalogSong {
 				cout << "Введите название песни для отображения: ";
 				getline(cin, title);
 				displaySong(title);
+				break;
+			case 5:
+				cout << "Введите имя автора для поиска песен: ";
+				cin.ignore();
+				getline(cin, author);
+				searchByAuthor(author);
 				break;
 			default:
 				break;
@@ -139,6 +145,56 @@ struct CatalogSong {
 		}
 	}
 
+	string toLower(const string& s) {
+		string lower;
+		for (char c : s) {
+			lower += tolower(c);
+		}
+		return lower;
+	}
+
+	string toUpper(const string& s) {
+		string upper;
+		for (char c : s) {
+			upper += toupper(c);
+		}
+		return upper;
+	}
+
+	string trim(const string& s) {
+		string trimmed;
+		for (char c : s) {
+			if (!isspace(c)) {
+				trimmed += c;
+			}
+		}
+		return trimmed;
+	}
+
+	void searchByAuthor(const string& author) {
+		vector<Song> results;
+		string lowerAuthor = toLower(trim(author));
+		string upperAuthor = toUpper(trim(author));
+		for (const Song& song : songs) {
+			string lowerSongAuthor = toLower(trim(song.author));
+			string upperSongAuthor = toUpper(trim(song.author));
+			if (lowerSongAuthor == lowerAuthor || lowerSongAuthor == upperAuthor ||
+				upperSongAuthor == lowerAuthor || upperSongAuthor == upperAuthor) {
+				results.push_back(song);
+			}
+		}
+		if (results.empty()) {
+			cout << "Песни этого автора не найдены.\n";
+		}
+		else {
+			for (const Song& song : results) {
+				cout << "Title: " << song.title
+					<< "\nAuthor: " << song.author
+					<< "\nYear: " << song.year
+					<< "\nLyrics: " << song.lyrics << "\n";
+			}
+		}
+	}
 };
 
 int main(){
