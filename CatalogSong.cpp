@@ -9,16 +9,16 @@ struct Song
 	string title, author, year, lyrics;
 };
 
-struct CatalogSong{
+struct CatalogSong {
 	vector<Song> songs;
-	
+
 	void DisplayMenu(CatalogSong& catalog) {
 		int choice;
 		do
 		{
 			cout << "1. Добавить песню\n"
 				<< "2. Удалить песню\n"
-			    << "3. Изменить песню\n"
+				<< "3. Изменить песню\n"
 				<< "4. Показать песню\n"
 				<< "5. Поиск по автору\n"
 				<< "6. Поиск по тексту песни\n"
@@ -31,6 +31,9 @@ struct CatalogSong{
 			{
 			case 1:
 				addSongInteractive(catalog);
+				break;
+			case 2:
+				removeSongInteractive();
 				break;
 
 			default:
@@ -57,6 +60,25 @@ struct CatalogSong{
 			newSong.lyrics += lyrics_line + "\n";
 		}
 		catalog.addSong(newSong);
+	}
+	void removeSong(const string& title) {
+		auto it = remove_if(songs.begin(), songs.end(), [&](const Song& s) {
+			return s.title == title;
+			});
+		if (it != songs.end()) {
+			songs.erase(it, songs.end());
+			cout << "Песня удалена.\n";
+		}
+		else {
+			cout << "Песня не найдена.\n";
+		}
+	}
+	void removeSongInteractive() {
+		string title;
+		cout << "Введите название песни для удаления: ";
+		cin.ignore();
+		getline(cin, title);
+		removeSong(title);
 	}
 };
 
