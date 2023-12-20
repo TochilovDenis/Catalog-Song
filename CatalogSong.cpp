@@ -153,10 +153,11 @@ struct CatalogSong {
 		getline(cin, newSong.author);
 		cout << "Год: ";
 		cin >> newSong.year;
-		cin.ignore();
-		cout << "Текст: ";
-		cin.ignore();
-		getline(cin, newSong.lyrics);
+		cout << "Tекст (введите 'END' в новой строке, когда закончите):\n";
+		string lyrics_line;
+		while (getline(cin, lyrics_line) && lyrics_line != "END") {
+			newSong.lyrics += lyrics_line + "\n";
+		}
 		updateSong(title, newSong);
 	}
 
