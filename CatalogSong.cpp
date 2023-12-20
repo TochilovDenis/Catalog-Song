@@ -94,9 +94,10 @@ struct CatalogSong {
 		getline(cin, newSong.title);
 		cout << "Введите автора песни: ";
 		cin.ignore();
-		cin >> newSong.author;
+		getline(cin, newSong.author);
 		cout << "Введите год выпуска песни: ";
-		cin >> newSong.year;
+		cin.ignore();
+		getline(cin, newSong.year);
 		cout << "Введите текст песни (введите 'END' в новой строке, когда закончите):\n";
 		string lyrics_line;
 		while (getline(cin, lyrics_line) && lyrics_line != "END") {
