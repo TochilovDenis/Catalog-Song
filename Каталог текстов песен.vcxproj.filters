@@ -19,4 +19,7 @@
       <Filter>Файлы заголовков</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="song.txt" />
+  </ItemGroup>
 </Project>
