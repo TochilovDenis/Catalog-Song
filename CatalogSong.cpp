@@ -93,6 +93,7 @@ struct CatalogSong {
 		cin.ignore();
 		getline(cin, newSong.title);
 		cout << "Введите автора песни: ";
+		cin.ignore();
 		cin >> newSong.author;
 		cout << "Введите год выпуска песни: ";
 		cin >> newSong.year;
@@ -145,13 +146,16 @@ struct CatalogSong {
 		Song newSong;
 		cout << "Введите новые данные песни.\n";
 		cout << "Название: ";
+		cin.ignore();
 		getline(cin, newSong.title);
 		cout << "Автор: ";
+		cin.ignore();
 		getline(cin, newSong.author);
 		cout << "Год: ";
 		cin >> newSong.year;
 		cin.ignore();
 		cout << "Текст: ";
+		cin.ignore();
 		getline(cin, newSong.lyrics);
 		updateSong(title, newSong);
 	}
@@ -299,7 +303,7 @@ struct CatalogSong {
 	}
 
 	void saveToFile(const string& filename) {
-		ofstream file(filename, ios::trunc);
+		ofstream file(filename);
 		if (file.is_open()) {
 			for (const Song& song : songs) {
 				file << song.title << "\n"
