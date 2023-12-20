@@ -143,17 +143,20 @@ struct CatalogSong {
 
 	void updateSongInteractive() {
 		cout << "Введите название песни для обновления: ";
-		cin.ignore();
 		string title;
+		cin.ignore();
 		getline(cin, title);
 		Song newSong;
 		cout << "Введите новые данные песни.\n";
 		cout << "Название: ";
 		cin.ignore();
-		getline(cin, newSong.title);
+		while (getline(cin, newSong.title)) {
+			break;
+		}
 		cout << "Автор: ";
-		cin.ignore();
-		getline(cin, newSong.author);
+		while (getline(cin, newSong.author)) {
+			break;
+		}
 		cout << "Год: ";
 		cin >> newSong.year;
 		cout << "Tекст (введите 'END' в новой строке, когда закончите):\n";
@@ -307,7 +310,7 @@ struct CatalogSong {
 	}
 
 	void saveToFile(const string& filename) {
-		ofstream file(filename);
+		ofstream file(filename, ios::app);
 		if (file.is_open()) {
 			for (const Song& song : songs) {
 				file << song.title << "\n"
