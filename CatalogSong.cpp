@@ -150,10 +150,13 @@ struct CatalogSong {
 		cout << "Введите новые данные песни.\n";
 		cout << "Название: ";
 		cin.ignore();
-		getline(cin, newSong.title);
+		while (getline(cin, newSong.title)) {
+			break;
+		}
 		cout << "Автор: ";
-		cin.ignore();
-		getline(cin, newSong.author);
+		while (getline(cin, newSong.author)) {
+			break;
+		}
 		cout << "Год: ";
 		cin >> newSong.year;
 		cout << "Tекст (введите 'END' в новой строке, когда закончите):\n";
